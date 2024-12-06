@@ -258,7 +258,7 @@ Of course, to make VNC happy, we need to specify the `DISPLAY` environment varia
 
 ```json
 "remoteEnv": {
-  "DISPLAY": ":0"
+  "DISPLAY": ":1"
 }
 ```
 

@@ -4,12 +4,18 @@
     "dockerfile": "Containerfile"
   },
   // do not use root
-  "containerUser": "podman-desktop",
-  // Add the IDs of extensions you want installed when the container is created.
+  "remoteUser": "podman",
+  "containerUser": "podman",
   "extensions": ["svelte.svelte-vscode", "bradlc.vscode-tailwindcss"],
-  "features": {},
+  "customizations": {
+      "vscode": {
+        "extensions": ["svelte.svelte-vscode", "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
   "runArgs": [
-    "--cap-add=sys_admin",
+    "--cap-add",
+    "sys_admin",
     "--security-opt",
     "seccomp=unconfined",
     "--device",
@@ -17,7 +23,9 @@
     "--security-opt",
     "label=disable",
     "--security-opt",
-    "apparmor=unconfined"
+    "apparmor=unconfined",
+    "-v",
+    "/run:/run"
   ],
   "postStartCommand": "${containerWorkspaceFolder}/.devcontainer/postStartCommand.sh",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",

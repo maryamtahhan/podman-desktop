@@ -25,7 +25,7 @@ timeout 120 bash -c 'until xdpyinfo -display :0 &> /dev/null; do printf "."; sle
 
 # launch podman desktop
 echo "Launching Podman Desktop"
-cd dist/linux-unpacked/&& ./podman-desktop &
+cd dist/linux-unpacked/ && ./podman-desktop &
 
 
 # Launch the 9000 redirect after 20 seconds
@@ -34,4 +34,5 @@ websockify --web=/usr/share/novnc localhost:9000 localhost:5900 &
 
 # launch the website rendering
 echo "Launching Website"
-cd website && yarn start
+cd website && pnpm start
+#pnpm website:dev

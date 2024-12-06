@@ -17,8 +17,20 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # This script is run inside the container after the repo has been cloned.
-# Launch yarn to install dependencies and build the project.
-yarn
+# Enable Corepack and ensure pnpm is available
+export COREPACK_ENABLE_STRICT=0
+if ! command -v pnpm &> /dev/null; then
+    echo "pnpm is not installed. Enabling Corepack and ensuring pnpm is available..."
+    corepack enable pnpm
+    corepack prepare pnpm@latest --activate
+fi
 
-# build podman-desktop
-MODE=production yarn run build && yarn run electron-builder build --linux --dir --config .electron-builder.config.cjs
+# Build podman-desktop
+echo "Installing dependencies with pnpm..."
+pnpm install
+pnpm postinstall
+
+echo "Building the project..."
+pnpm compile
+
+echo "Build completed successfully."
